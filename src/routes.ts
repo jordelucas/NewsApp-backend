@@ -8,5 +8,6 @@ const userController = new UserController();
 const invitationController = new InvitationController();
 
 router.post('/users', userController.create);
+router.post('/invitation', invitationController.create);
 
 export { router };
