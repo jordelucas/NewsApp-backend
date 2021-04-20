@@ -1,12 +1,13 @@
 import { Request, Response } from "express";
-import { getRepository } from "typeorm";
+import { getCustomRepository, getRepository } from "typeorm";
 import { User } from "../models/User";
+import { UsersRepository } from "../repositories/UserRepository";
 
 class UserController {
   async create(request: Request, response: Response) {
-    const { name, email, password, permission } = request.body;
+    const usersRepository = getCustomRepository(UsersRepository);
 
-    const usersRepository = getRepository(User);
+    const { name, email, password, permission } = request.body;
 
     if (permission !== "author" && permission !== "subscriber") {
       return response.status(400).json({

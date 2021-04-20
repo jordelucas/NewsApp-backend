@@ -1,14 +1,16 @@
 import { Request, Response } from "express";
-import { getRepository } from "typeorm";
+import { getCustomRepository, getRepository } from "typeorm";
 import { User } from "../models/User";
 import { Invitation } from "../models/Invitation";
+import { UsersRepository } from "../repositories/UserRepository";
+import { InvitationsRepository } from "../repositories/InvitationRepository";
 
 class InvitationController {
   async create(request: Request, response: Response) {
-    const { user_id } = request.body;
+    const usersRepository = getCustomRepository(UsersRepository);
+    const invitationsRepository = getCustomRepository(InvitationsRepository);
 
-    const usersRepository = getRepository(User);
-    const invitationsRepository = getRepository(Invitation);
+    const { user_id } = request.body;
 
     const userResult = await usersRepository.findOne({
       id: user_id
@@ -31,9 +33,9 @@ class InvitationController {
   }
 
   async validade(request: Request, response: Response) {
-    const invite_id = request.params.id;
+    const invitationsRepository = getCustomRepository(InvitationsRepository);
 
-    const invitationsRepository = getRepository(Invitation);
+    const invite_id = request.params.id;
     
     const inviteResult = await invitationsRepository.findOne({
       id: invite_id
