@@ -96,7 +96,37 @@ class NewsController {
       return {...item, author_name: filteredUser?.name ?? 'Desconhecido'}
     })
 
-    return response.status(201).json(serializedNews);
+    return response.status(200).json(serializedNews);
+  }
+
+  async showByID(request: Request, response: Response) {
+    const newsRepository = getCustomRepository(NewsRepository);
+    const usersRepository = getCustomRepository(UsersRepository);
+    const userNewsRepository = getCustomRepository(UserNewsRepository);
+
+    const IDRequest = request.params.id;
+
+    const newsResult = await newsRepository.findOne(IDRequest);
+
+    if (!newsResult) {
+      return response.status(404).json({
+        error: "News not found!",
+      })
+    }
+
+    const filteredUser = await usersRepository.findOne(newsResult.user_id);
+
+    delete newsResult.user_id;
+
+    const alreadyBeenRead = await userNewsRepository.find({
+      news_id: IDRequest,
+    })
+
+    return response.status(200).json({
+      ...newsResult,
+      author_name: filteredUser.name,
+      views: alreadyBeenRead.length,
+    });
   }
 }
 
