@@ -25,7 +25,7 @@ class UserNewsController {
     })
 
     if (!userResult) {
-      return response.status(400).json({
+      return response.status(404).json({
         error: "User not found!"
       });
     }
@@ -37,7 +37,7 @@ class UserNewsController {
     })
 
     if (!newsResult) {
-      return response.status(400).json({
+      return response.status(404).json({
         error: "News not found!"
       });
     }
@@ -51,7 +51,7 @@ class UserNewsController {
       const currentDate = new Date();
       await userNewsRepository.update(alreadyBeenRead.id, { readed_at: currentDate });
       
-      return response.status(201).json({...alreadyBeenRead, readed_at: currentDate});
+      return response.status(200).json({...alreadyBeenRead, readed_at: currentDate});
     }
 
     const userNews = userNewsRepository.create({
