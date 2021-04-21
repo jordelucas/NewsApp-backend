@@ -17,16 +17,22 @@ class NewsController {
       });
     }
 
-    const user = await usersRepository.findOne({
+    const userResult = await usersRepository.findOne({
       where: {
         id: user_id,
       }
     })
 
-    if (!user) {
+    if (!userResult) {
       return response.status(404).json({
         error: "User not found!"
       });
+    }
+
+    if(userResult.permission === "subscriber") {
+      return response.status(403).json({
+        error: "the user is not allowed to create a news story"
+      })
     }
 
     const newPost = newsRepository.create({
