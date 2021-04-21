@@ -79,7 +79,7 @@ class NewsController {
       where: {
         id: Not(In(newsIds)),
       },
-      select: ["id", "title", "description", "created_at", "author"],
+      select: ["id", "title", "created_at", "author"],
       relations: ["author"],
     })
 
