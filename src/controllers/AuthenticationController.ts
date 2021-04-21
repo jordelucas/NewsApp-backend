@@ -10,7 +10,7 @@ class AuthenticationController {
 
     if (!email || !password) {
       return response.status(400).json({
-        error: "column not especified!"
+        error: "field not especified!"
       });
     }
 
@@ -22,7 +22,7 @@ class AuthenticationController {
     })
 
     if (!result) {
-      return response.status(400).json({
+      return response.status(404).json({
         error: "User not found!"
       });
     }
