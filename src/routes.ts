@@ -19,6 +19,7 @@ router.get('/invitation/:id', invitationController.validade);
 router.post('/authentication', authenticationController.authenticate);
 router.post('/news', newsController.create);
 router.get('/news', newsController.show);
+router.get('/news/:id', newsController.showByID);
 router.post('/read', userNewsController.create);
 
 export { router };
