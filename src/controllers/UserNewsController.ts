@@ -49,9 +49,14 @@ class UserNewsController {
 
     if (alreadyBeenRead) {
       const currentDate = new Date();
-      await userNewsRepository.update(alreadyBeenRead.id, { readed_at: currentDate });
+      await userNewsRepository.update(alreadyBeenRead.id, { 
+        readed_at: currentDate
+      });
       
-      return response.status(200).json({...alreadyBeenRead, readed_at: currentDate});
+      return response.status(200).json({
+        ...alreadyBeenRead,
+        readed_at: currentDate
+      });
     }
 
     const userNews = userNewsRepository.create({
