@@ -8,10 +8,10 @@ class News {
   readonly id: string; 
 
   @Column()
-  titulo: string;
+  title: string;
 
   @Column()
-  descricao: string;
+  description: string;
 
   @Column()
   user_id: string;
