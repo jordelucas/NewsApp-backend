@@ -73,17 +73,30 @@ class NewsController {
       },
     })
 
+    const allAuthors = await usersRepository.find({
+      where: {
+        permission: "author"
+      }
+    });
+
     const newsIds = alreadyBeenRead.map(item => item.news_id);
 
     const newsResult = await newsRepository.find({
       where: {
         id: Not(In(newsIds)),
       },
-      select: ["id", "title", "created_at", "author"],
-      relations: ["author"],
+      select: ["id", "title", "created_at", "user_id"],
     })
 
-    return response.status(201).json(newsResult);
+    const serializedNews = newsResult.map(item => {
+      const filteredUser = allAuthors.find(user => user.id === item.user_id);
+
+      delete item.user_id;
+
+      return {...item, author_name: filteredUser?.name ?? 'Desconhecido'}
+    })
+
+    return response.status(201).json(serializedNews);
   }
 }
 
