@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
-import { getCustomRepository, getRepository } from "typeorm";
-import { User } from "../models/User";
+import { getCustomRepository } from "typeorm";
 import { UsersRepository } from "../repositories/UserRepository";
 
 class UserController {
@@ -8,6 +7,12 @@ class UserController {
     const usersRepository = getCustomRepository(UsersRepository);
 
     const { name, email, password, permission } = request.body;
+
+    if (!name || !email || !password || !permission) {
+      return response.status(400).json({
+        error: "field not especified!"
+      });
+    }
 
     if (permission !== "author" && permission !== "subscriber") {
       return response.status(400).json({
@@ -20,7 +25,7 @@ class UserController {
     })
 
     if (userAlreadyExists) {
-      return response.status(400).json({
+      return response.status(409).json({
         error: "User already exists!"
       });
     }
@@ -34,7 +39,7 @@ class UserController {
 
     await usersRepository.save(user);
 
-    return response.json(user);
+    return response.status(201).json(user);
   }
 }
 

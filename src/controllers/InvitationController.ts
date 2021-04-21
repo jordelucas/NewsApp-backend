@@ -1,7 +1,5 @@
 import { Request, Response } from "express";
-import { getCustomRepository, getRepository } from "typeorm";
-import { User } from "../models/User";
-import { Invitation } from "../models/Invitation";
+import { getCustomRepository } from "typeorm";
 import { UsersRepository } from "../repositories/UserRepository";
 import { InvitationsRepository } from "../repositories/InvitationRepository";
 
@@ -17,7 +15,7 @@ class InvitationController {
     })
 
     if (!userResult) {
-      return response.status(400).json({
+      return response.status(404).json({
         error: "User not found!"
       });
     }
@@ -29,7 +27,7 @@ class InvitationController {
 
     await invitationsRepository.save(invite);
 
-    return response.json(invite);
+    return response.status(201).json(invite);
   }
 
   async validade(request: Request, response: Response) {
@@ -42,7 +40,7 @@ class InvitationController {
     })
 
     if (!inviteResult) {
-      return response.status(400).json({
+      return response.status(404).json({
         error: "Invitation not found!"
       });
     }
@@ -56,7 +54,7 @@ class InvitationController {
 
     const result = maximum_time > current_time;
 
-    return response.json({ isActive: result });
+    return response.status(200).json({ isActive: result });
   }
 }
 
