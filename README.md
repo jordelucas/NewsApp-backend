@@ -54,18 +54,18 @@ Autor da notícia:
 
 ## :ballot_box_with_check: Endpoints ##
 
-**[POST]**    `/users`
+**[POST]**    `/users` - Cadastra um novo usuário. {name, email, password, permission}
 
-**[POST]**    `/authentication` 
+**[POST]**    `/authentication` - Verifica se o usuário tem cadastro. {email, password}
 
-**[POST]**    `/invitation` 
+**[POST]**    `/invitation` - Criar um novo convite - {user_id}
 
-**[GET]**     `/invitation/:id` 
+**[GET]**     `/invitation/:id` - Verifica se o convite está ativo
 
-**[POST]**    `/news`
+**[POST]**    `/news` - Cadastra uma nova notícia - {title, description, user_id}
 
-**[GET]**     `/news`
+**[GET]**     `/news` - Lista todas as notícias que o usuário ainda não leu - {user_id}
 
-**[GET]**     `/news/:id` 
+**[GET]**     `/news/:id` - Mostrar uma notícia 
 
-**[POST]**    `/read` 
+**[POST]**    `/read` - Registra leitura
