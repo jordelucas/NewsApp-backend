@@ -87,16 +87,24 @@ class NewsController {
       where: {
         id: Not(In(newsIds)),
       },
-      select: ["id", "title", "created_at", "user_id"],
+      select: ["id", "title", "created_at", "user_id", "description"],
     })
 
     const serializedNews = newsResult.map(item => {
       const filteredUser = allAuthors.find(user => user.id === item.user_id);
 
+      const time = Math.ceil(
+        `${item.description}`
+        .split(' ')
+        .length
+        /250);
+
       delete item.user_id;
+      delete item.description;
 
       return {
         ...item,
+        time_to_read: time,
         created_at: 
           item.created_at.getDay() + '/' +
           item.created_at.getMonth() + '/' +
