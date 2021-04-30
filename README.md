@@ -36,6 +36,13 @@ $ yarn dev
 # O servidor irá iniciar na porta  3333 - vá para http://localhost:3333
 ```
 
+É possível fazer login com as credencias:
+
+```bash
+email: jorde@gmail.com
+password: 123
+```
+
 ## :book: Estórias do usuário: 
 
 Membro da comunidade:
