@@ -51,7 +51,9 @@ class NewsController {
     const userNewsRepository = getCustomRepository(UserNewsRepository);
     const newsRepository = getCustomRepository(NewsRepository);
 
-    const { user_id } = request.body;
+    // const { user_id } = request.body;
+
+    const user_id = request.params.id;
 
     if (!user_id) {
       return response.status(400).json({
