@@ -95,7 +95,13 @@ class NewsController {
 
       delete item.user_id;
 
-      return {...item, author_name: filteredUser?.name ?? 'Desconhecido'}
+      return {
+        ...item,
+        created_at: 
+          item.created_at.getDay() + '/' +
+          item.created_at.getMonth() + '/' +
+          item.created_at.getFullYear(),
+        author_name: filteredUser?.name ?? 'Desconhecido'}
     })
 
     return response.status(200).json(serializedNews);
