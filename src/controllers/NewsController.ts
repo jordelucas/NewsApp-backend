@@ -138,8 +138,19 @@ class NewsController {
       news_id: IDRequest,
     })
 
+    const time = Math.ceil(
+      `${newsResult.description}`
+      .split(' ')
+      .length
+      /250);
+
     return response.status(200).json({
       ...newsResult,
+      time_to_read: time,
+      created_at: 
+        newsResult.created_at.getDay() + '/' +
+        newsResult.created_at.getMonth() + '/' +
+        newsResult.created_at.getFullYear(),
       author_name: filteredUser.name,
       views: alreadyBeenRead.length,
     });
